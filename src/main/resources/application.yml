@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: root123
+
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    mode: HTML

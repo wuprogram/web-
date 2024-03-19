@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+       
+<mapper namespace="com.example.mapper.UserMapper" >
+<resultMap id="userResultMap" type="com.example.pojo.User">
+        <id column="member_id" property="id"/>
+        <result column="members_username" property="username"/>
+        <result column="members_password" property="password"/>
+        <result column="members_confirmpassword" property="confirmPassword"/>
+        <result column="members_email" property="email"/>
+        <result column="members_realname" property="realname"/>
+        <result column="members_phone" property="phone"/>
+        <result column="members_address" property="address"/>
+    </resultMap>
+    <insert id="addUser"  >
+        INSERT INTO members (members_username, members_password,
+        					members_confirmpassword,members_email,
+        					members_realname,members_phone,members_address) 
+        					VALUES (#{username}, #{password},#{confirmPassword},
+        					#{email},#{realname},#{phone},#{address})
+    </insert>
+    
+    <!-- 根据用户ID删除用户 -->
+    <delete id="deleteUserById" >
+        DELETE FROM members WHERE member_id = #{id}
+    </delete>
+    
+    <!-- 更新用户信息 -->
+    <update id="updateUser" parameterType="com.example.pojo.User">
+        UPDATE members SET members_username = #{username}, 
+                           members_password = #{password},
+                           members_confirmpassword = #{password},
+                           members_email = #{email},
+                           members_realname = #{realname},
+                           members_phone = #{phone},
+                           members_address = #{address}
+        WHERE members_username = #{username}
+    </update>
+    
+    <!-- 根据用户名查询用户信息 -->
+    <select id="getUserByname" parameterType="java.lang.String" resultMap="userResultMap">
+        SELECT * FROM members WHERE members_username = #{username}
+    </select>
+    
+    <!-- 根据用户ID查询用户信息 -->
+    <select id="getUserById" parameterType="int" resultType="com.example.pojo.User">
+        SELECT * FROM members WHERE members_id = #{id}
+    </select>
+    <!-- 其他SQL语句省略 -->
+</mapper>

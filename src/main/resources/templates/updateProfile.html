@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <!-- Add your stylesheets and scripts here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .updateProfile {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .updateProfile h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .updateProfile form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .updateProfile label {
+            margin-bottom: 5px;
+        }
+
+        .updateProfile input {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .updateProfile button {
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .updateProfile button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+<div class=updateProfile>
+    <h2>个人信息修改</h2>
+
+    <!-- Display profile update form -->
+    <form action="/updateProfile" method="post">
+        <label for="username">用户名:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="email">邮箱:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="realname">真实姓名:</label>
+        <input type="text" id="realname" name="realname">
+
+        <label for="phone">电话号码:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10,11}" placeholder="Enter a 11-digit phone number">
+
+        <label for="address">地址:</label>
+        <textarea id="address" name="address"></textarea>
+
+        <button type="submit">更新</button>
+    </form>
+    </div>
+
+    <!-- Add additional content, links, or messages as needed -->
+
+</body>
+</html>
