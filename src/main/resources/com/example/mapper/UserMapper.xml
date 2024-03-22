@@ -5,6 +5,7 @@
 <resultMap id="userResultMap" type="com.example.pojo.User">
         <id column="member_id" property="id"/>
         <result column="members_username" property="username"/>
+        <result column="members_gender" property="gender"/>
         <result column="members_password" property="password"/>
         <result column="members_confirmpassword" property="confirmPassword"/>
         <result column="members_email" property="email"/>
@@ -13,10 +14,10 @@
         <result column="members_address" property="address"/>
     </resultMap>
     <insert id="addUser"  >
-        INSERT INTO members (members_username, members_password,
+        INSERT INTO members (members_username,members_gender, members_password,
         					members_confirmpassword,members_email,
         					members_realname,members_phone,members_address) 
-        					VALUES (#{username}, #{password},#{confirmPassword},
+        					VALUES (#{username},#{gender}, #{password},#{confirmPassword},
         					#{email},#{realname},#{phone},#{address})
     </insert>
     
@@ -28,6 +29,7 @@
     <!-- 更新用户信息 -->
     <update id="updateUser" parameterType="com.example.pojo.User">
         UPDATE members SET members_username = #{username}, 
+        				   members_gender = #{gender},
                            members_password = #{password},
                            members_confirmpassword = #{password},
                            members_email = #{email},
@@ -46,5 +48,12 @@
     <select id="getUserById" parameterType="int" resultType="com.example.pojo.User">
         SELECT * FROM members WHERE members_id = #{id}
     </select>
+    
+    <!-- 根据用户名查询用户名是否存在 -->
+    <select id="existsByUsername" resultType="java.lang.Boolean">
+    SELECT EXISTS(SELECT 1 FROM members WHERE members_username = #{username})
+	</select>
+    
+    
     <!-- 其他SQL语句省略 -->
 </mapper>

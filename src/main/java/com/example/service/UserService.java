@@ -21,5 +21,7 @@ public interface UserService {
 
 	public User login(String username);
 
+	public boolean isUsernameExists(String username);
+
 	
 }

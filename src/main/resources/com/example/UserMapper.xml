@@ -34,4 +34,8 @@
         SELECT * FROM members WHERE member_id = #{member_id}
     </select>
     <!-- 其他SQL语句省略 -->
+    
+    <select id="existsByUsername" resultType="java.lang.Boolean">
+    SELECT EXISTS(SELECT 1 FROM users WHERE username = #{username})
+    </select>
 </mapper>

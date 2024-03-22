@@ -14,7 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 150vh;
+            height: 100vh;
         }
 
         .register {
@@ -34,28 +34,8 @@
             flex-direction: column;
         }
 
-
         .register label {
             margin-bottom: 5px;
-           
-        }
-        
-        .register input,
-        .register select {
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-        }
-        
-        .register .gender-labels {
-            display: flex;
-            justify-content: space-between; /* 让标签之间的间距自动分配 */
-        }
-
-        .register .gender-labels label {
-            flex: 1; /* 让标签占据父容器的相同宽度 */
         }
 
         .register input {
@@ -65,7 +45,6 @@
             border-radius: 5px;
             outline: none;
         }
-        
 
         .register button {
             padding: 10px;
@@ -89,17 +68,15 @@
 <div class="register">
 <h2>注册界面</h2>
     <!-- Display registration form -->
-    <form action="/register" method="post" onsubmit="return validateForm()">
+    <form action="/register" method="post" onsubmit="return validatePassword()">
         <label for="username">*用户名:</label>
         <input type="text" id="username" name="username" required onblur="checkUsername()">
         <span id="usernameError" style="color: red;"></span>
         
-        <div class = "gender-labels">
         <input type="radio" id="male" name="gender" value="男">
   		<label for="male">男</label><br>
   		<input type="radio" id="female" name="gender" value="女">
   		<label for="female">女</label><br>
-  		</div>
 
         <label for="password">*密码:</label>
         <input type="password" id="password" name="password"  placeholder="密码必须由大小写字母和数字组成，且至少为六位数" required>
@@ -116,25 +93,8 @@
         <label for="phone">*电话号码:</label>
         <input type="tel" id="phone" name="phone" pattern="[0-9]{11}" placeholder="请输入11位的电话号码" required>
 
-
-		<label for="country">国家:</label>
-			<select id="country" name="country" onchange="populateCities()" required>
-    			<option value="">请选择国家</option>
-   				<option value="中国">中国</option>
-    			<option value="日本">日本</option>
-			</select>
-
-		<label for="city">城市:</label>
-			<select id="city" name="city" required>
-    			<option value="">请选择城市</option>
-			</select>
-
-        <label for="address">*具体地址:</label>
+        <label for="address">*地址:</label>
         <textarea id="address" name="address" required></textarea>
-        
-        
-        
-        
 
         <button type="submit">注册</button>
     </form>
@@ -161,23 +121,6 @@
             xhr.send();
         });
     </script>
-    
-    <script>
-    
-    function validateForm() {
-        if (!validatePassword()) {
-            return false;
-        }
-
-        if (!validateAddress()) {
-            return false;
-        }
-
-        return true;
-    }
-    
-    </script>
-    
     <script >
     function validatePassword() {
         var password = document.getElementById("password").value;
@@ -200,51 +143,6 @@
         return true;
     }
     </script>
-    <script>
-    function validateAddress() {
-    var country = document.getElementById("country").value;
-	var city = document.getElementById("city").value;
-	var address = document.getElementById("address").value;
-
-	// 合并国家、城市和地址
-	var fullAddress = country + ', ' + city + ', ' + address;
-	// 更新地址字段的值
-	document.getElementById("address").value = fullAddress;
-
-	// 返回true以继续表单提交
-	return true;
-    }
-    
-    </script>
-    <script>
-    function populateCities() {
-        var countrySelect = document.getElementById("country");
-        var citySelect = document.getElementById("city");
-
-        // 清除旧的城市选项
-        citySelect.innerHTML = "";
-
-        // 获取选定的国家值
-        var country = countrySelect.value;
-
-        // 根据国家加载相应的城市选项
-        if (country === "中国") {
-            var cities = ["北京", "上海", "广州", "深圳", "杭州"];
-        } else if (country === "日本") {
-            var cities = ["东京", "横滨", "川崎", "大阪", "京都"];
-        } else {
-            var cities = [];
-        }
-
-        // 添加新的城市选项
-        cities.forEach(function(city) {
-            var option = document.createElement("option");
-            option.text = city;
-            option.value = city;
-            citySelect.appendChild(option);
-        });
-    }
-	</script>
 
 </body>
 </html>

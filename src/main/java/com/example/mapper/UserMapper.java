@@ -26,4 +26,6 @@ public interface UserMapper {
     
     // 查询所有用户
     List<User> getAllUsers();
+
+	boolean existsByUsername(String username);
 }

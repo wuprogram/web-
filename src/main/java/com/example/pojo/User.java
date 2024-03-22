@@ -5,6 +5,8 @@ public class User {
 	private Long id;
 
 	private String username;
+	
+	private String gender;
 
 	private String password;
 
@@ -18,18 +20,21 @@ public class User {
 
 	private String address;
 
+	
+
 	@Override
 	public String toString() {
-		return "User{" +
-				"id=" + id +
-				", username='" + username + '\'' +
-				", password='" + password + '\'' +
-				", confirmPassword='" + confirmPassword + '\'' +
-				", email='" + email + '\'' +
-				", realname='" + realname + '\'' +
-				", phone='" + phone + '\'' +
-				", address='" + address + '\'' +
-				'}';
+		return "User [id=" + id + ", username=" + username + ", gender=" + gender + ", password=" + password
+				+ ", confirmPassword=" + confirmPassword + ", email=" + email + ", realname=" + realname + ", phone="
+				+ phone + ", address=" + address + "]";
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public Long getId() {

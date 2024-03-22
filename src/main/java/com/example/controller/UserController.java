@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,21 +25,45 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private UserMapper userMapper;
+	
+	
 
+	 @GetMapping("/checkusername")
+	 @ResponseBody
+	    public String checkUsername(@RequestParam String username) {
+	        // 调用 UserMapper 中的方法检查用户名是否存在
+	        if (userMapper.existsByUsername(username)) {
+	            return "exists"; // 如果用户名存在，返回 'exists'
+	        } else {
+	            return "available"; // 如果用户名不存在，返回 'available'
+	        }
+	    }
+	 
     @PostMapping("/register")
+    @ResponseBody
     public String registerUser( User user) {
-    	System.out.println(user);
-    	System.out.println(user);
-    	System.out.println(user);
-    	System.out.println(user);
-        userMapper.addUser(user);
-        return "User registered successfully!";
+    	if(userMapper.existsByUsername(user.getUsername())) {
+    		return "用户名已存在，注册失败！";
+    	}else if(!user.getPassword().equals(user.getConfirmPassword())) {
+    		return "两次密码输入不同，注册失败！";
+    	}
+    	else {
+    		userMapper.addUser(user);
+            return "用户注册成功！";
+		}
     }
     @PostMapping("/updateProfile")
     public ModelAndView updateUser(User user) {
-    	userMapper.updateUser(user);
-    	ModelAndView modelAndView = new ModelAndView("/profile.html");
-    	return modelAndView;
+    	if(userMapper.existsByUsername(user.getUsername())) {
+    		ModelAndView modelAndView = new ModelAndView("/profile.html");
+        	return modelAndView;
+    	}
+    	else {
+    		userMapper.updateUser(user);
+        	ModelAndView modelAndView = new ModelAndView("/profile.html");
+        	return modelAndView;
+		}
+    	
     }
     @PostMapping("/confirm")
     public ModelAndView  confirm(@RequestParam String username, @RequestParam String password,Model model) {
@@ -52,10 +78,10 @@ public class UserController {
             return modelAndView;
         } else {
             // 认证失败，返回登录页面并显示错误消息
-        	System.out.println(user);
             System.out.println("验证失败！！！");
             model.addAttribute("error", "Invalid username or password");
             ModelAndView modelAndView = new ModelAndView("/profile.html");
+            modelAndView.addObject("user", user);
             return modelAndView;
         }
     }
