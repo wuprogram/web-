@@ -145,7 +145,7 @@
         document.getElementById('username').addEventListener('blur', function() {
             var username = this.value;
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/checkusername?username=' + username, true);
+            xhr.open('GET', '/checkusername1?username=' + username, true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                     var response = xhr.responseText;
@@ -207,7 +207,7 @@
 	var address = document.getElementById("address").value;
 
 	// 合并国家、城市和地址
-	var fullAddress = country + ', ' + city + ', ' + address;
+	var fullAddress = country + city  + address;
 	// 更新地址字段的值
 	document.getElementById("address").value = fullAddress;
 

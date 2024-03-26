@@ -75,12 +75,17 @@
     </style>
 </head>
 <body>
-    <div class="profile">
+    <div class="profile" >
         <h2>个人信息展示</h2>
 
         <div>
             <label>用户名:</label>
             <span th:text="${user.username}"></span>
+        </div>
+        
+        <div>
+            <label>编号:</label>
+            <span th:text="${user.id}"></span>
         </div>
         
         <div>
@@ -108,7 +113,8 @@
             <span th:text="${user.address}"></span>
         </div>
 
-        <p>信息有误？<a href="confirm.html">立即修改</a></p>
+        <p>信息有误？<a th:href="@{'/confirm?username=' + ${user.username}}">立即修改</a></p>
+
     </div>
 </body>
 </html>

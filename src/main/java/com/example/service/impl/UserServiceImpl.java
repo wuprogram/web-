@@ -50,5 +50,6 @@ public class UserServiceImpl implements UserService{
     	// 
     	return userMapper.existsByUsername(username);
     }
+	
     
 }

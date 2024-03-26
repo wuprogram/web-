@@ -2,8 +2,8 @@
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
        
 <mapper namespace="com.example.mapper.UserMapper" >
-<resultMap id="userResultMap" type="com.example.pojo.User">
-        <id column="member_id" property="id"/>
+	<resultMap id="userResultMap" type="com.example.pojo.User">
+        <id column="members_id" property="id"/>
         <result column="members_username" property="username"/>
         <result column="members_gender" property="gender"/>
         <result column="members_password" property="password"/>
@@ -12,14 +12,19 @@
         <result column="members_realname" property="realname"/>
         <result column="members_phone" property="phone"/>
         <result column="members_address" property="address"/>
-    </resultMap>
-    <insert id="addUser"  >
+        
+	</resultMap>
+    <insert id="addUser" parameterType="com.example.pojo.User" useGeneratedKeys="true" keyProperty="id" >
         INSERT INTO members (members_username,members_gender, members_password,
         					members_confirmpassword,members_email,
         					members_realname,members_phone,members_address) 
         					VALUES (#{username},#{gender}, #{password},#{confirmPassword},
         					#{email},#{realname},#{phone},#{address})
+        RETURNING members_id;
+        
     </insert>
+    
+    
     
     <!-- 根据用户ID删除用户 -->
     <delete id="deleteUserById" >
@@ -28,16 +33,20 @@
     
     <!-- 更新用户信息 -->
     <update id="updateUser" parameterType="com.example.pojo.User">
-        UPDATE members SET members_username = #{username}, 
-        				   members_gender = #{gender},
-                           members_password = #{password},
-                           members_confirmpassword = #{password},
-                           members_email = #{email},
-                           members_realname = #{realname},
-                           members_phone = #{phone},
-                           members_address = #{address}
-        WHERE members_username = #{username}
-    </update>
+    UPDATE members
+    <set>
+        <if test="username != null and username !=''  ">members_username = #{username},</if>
+        <if test="gender != null and gender != '' ">members_gender = #{gender},</if>
+        <if test="password != null and password != '' ">members_password = #{password},</if>
+        <if test="confirmPassword != null and confirmPassword != '' ">members_confirmpassword = #{confirmPassword},</if>
+        <if test="email != null and email != '' ">members_email = #{email},</if>
+        <if test="realname != null and realname != '' ">members_realname = #{realname},</if>
+        <if test="phone != null and phone != '' ">members_phone = #{phone},</if>
+        <if test="address != null and address != '' ">members_address = #{address}</if>
+    </set>
+    WHERE members_id = #{id}
+	</update>
+
     
     <!-- 根据用户名查询用户信息 -->
     <select id="getUserByname" parameterType="java.lang.String" resultMap="userResultMap">
@@ -45,7 +54,7 @@
     </select>
     
     <!-- 根据用户ID查询用户信息 -->
-    <select id="getUserById" parameterType="int" resultType="com.example.pojo.User">
+    <select id="getUserById" parameterType="java.lang.Integer" resultMap="userResultMap">
         SELECT * FROM members WHERE members_id = #{id}
     </select>
     
@@ -53,6 +62,8 @@
     <select id="existsByUsername" resultType="java.lang.Boolean">
     SELECT EXISTS(SELECT 1 FROM members WHERE members_username = #{username})
 	</select>
+	
+	
     
     
     <!-- 其他SQL语句省略 -->

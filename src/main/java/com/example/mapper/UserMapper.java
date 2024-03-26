@@ -19,7 +19,7 @@ public interface UserMapper {
     void updateUser(User user);
     
     // 根据ID查询用户信息
-    User getUserById(int id);
+    User getUserById(Integer id);
     
     //根据用户名查询用户信息
     User getUserByname(String username);

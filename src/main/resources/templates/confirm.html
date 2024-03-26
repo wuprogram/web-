@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录</title>
+    <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <style>
         body {
@@ -17,28 +17,28 @@
             height: 100vh;
         }
 
-        .login {
+        .confirm {
             background-color: #fff;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .login h2 {
+        .confirm h2 {
             text-align: center;
             margin-bottom: 20px;
         }
 
-        .login form {
+        .confirm form {
             display: flex;
             flex-direction: column;
         }
 
-        .login label {
+        .confirm label {
             margin-bottom: 5px;
         }
 
-        .login input {
+        .confirm input {
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
@@ -46,7 +46,7 @@
             outline: none;
         }
 
-        .login button {
+        .confirm button {
             padding: 10px;
             border: none;
             background-color: #007bff;
@@ -55,40 +55,27 @@
             cursor: pointer;
         }
 
-        .login button:hover {
+        .confirm button:hover {
             background-color: #0056b3;
         }
 
-        .login p {
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .login a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .login a:hover {
-            text-decoration: underline;
-        }
+        
     </style>
 </head>
 <body>
-<div class="login">
-    <h2>用户登录</h2>
-    <form action="/login" method="post">
-        <label for="username">用户名</label>
-        <input type="text" id="username" name="username" required="required">
+<div class="confirm">
+    <h2>信息安全验证</h2>
+    <form action="/processConfirm" method="post">
+    	<input type="hidden" id="username" name="username" th:value="${username}" readonly>
+    
+        <label for="displayUsername">用户名</label>
+        <input type="text" id="displayUsername" th:value="${username}" readonly>
 
         <label for="password">密码</label>
         <input type="password" id="password" name="password" required="required">
 
-        <button type="submit">登录</button>
+        <button type="submit">验证</button>
     </form>
-    
-    <p>没有账号？<a href="/register.html">立即注册</a></p>
 </div>
-	
 </body>
 </html>
